@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toca_moveis/ui/_core/widgets/primary_button.dart';
+import 'package:toca_moveis/ui/ar/ar_screen.dart';
 
 class PermissionScreen extends StatelessWidget {
   const PermissionScreen({
@@ -39,7 +40,9 @@ class PermissionScreen extends StatelessWidget {
               ),
             ),
             PrimaryButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ArScreen()));
+              },
               child: "Autorizar acesso à câmera",
             ),
             InkWell(
