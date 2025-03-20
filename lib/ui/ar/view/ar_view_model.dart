@@ -61,7 +61,7 @@ class ArViewModel {
     if (itemNode == null) return;
 
     final currentRotation = itemNode!.eulerAngles;
-    final newRotation = Vector3(currentRotation.x + 0.1, currentRotation.y, currentRotation.z);
+    final newRotation = Vector3(currentRotation.x - 0.1, currentRotation.y, currentRotation.z);
     itemNode!.eulerAngles = newRotation;
   }
 
