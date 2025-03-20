@@ -22,13 +22,22 @@ class _ArScreenState extends State<ArScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('ARKit in Flutter')),
-      body: ARKitSceneView(onARKitViewCreated: onARKitViewCreated));
+      body: ARKitSceneView(
+        enableTapRecognizer: true,
+        onARKitViewCreated: onARKitViewCreated,
+      ),
+    );
   }
 
   void onARKitViewCreated(ARKitController arkitController) {
     this.arkitController = arkitController;
+    this.arkitController.onARTap = (ar) => onARTapHandler(ar);
+
+  }
+
+  void onARTapHandler(List<ARKitTestResult> results) {
     final node = ARKitNode(
         geometry: ARKitSphere(radius: 0.1), position: Vector3(0, 0, -0.5));
-    this.arkitController.add(node);
+    arkitController.add(node);
   }
 }
