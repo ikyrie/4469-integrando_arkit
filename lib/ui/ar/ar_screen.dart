@@ -14,6 +14,7 @@ class ArScreen extends StatefulWidget {
 
 class _ArScreenState extends State<ArScreen> {
   late ARKitController arkitController;
+  late ArViewModel arViewModel;
 
   @override
   void dispose() {
@@ -24,6 +25,7 @@ class _ArScreenState extends State<ArScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () => arViewModel.rotateRight(), child: Icon(Icons.rotate_right)),
       appBar: AppBar(title: Text(widget.furniture.name)),
       body: ARKitSceneView(
         showFeaturePoints: true,
@@ -35,7 +37,7 @@ class _ArScreenState extends State<ArScreen> {
 
   void onARKitViewCreated(ARKitController arkitController) {
     this.arkitController = arkitController;
-    final ArViewModel arViewModel = ArViewModel(arkitController:  arkitController);
+    arViewModel = ArViewModel(arkitController:  arkitController);
     this.arkitController.addCoachingOverlay(CoachingOverlayGoal.horizontalPlane);
     this.arkitController.onARTap = (ar) async => arViewModel.onARTapHandler(ar, widget.furniture.glb);
   }

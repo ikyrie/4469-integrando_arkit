@@ -48,4 +48,37 @@ class ArViewModel {
       assetType: AssetType.documents,
     );
   }
+
+  void rotateLeft() {
+    if (itemNode == null) return;
+
+    final currentRotation = itemNode!.eulerAngles;
+    final newRotation = Vector3(currentRotation.x + 0.1, currentRotation.y, currentRotation.z);
+    itemNode!.eulerAngles = newRotation;
+  }
+
+  void rotateRight() {
+    if (itemNode == null) return;
+
+    final currentRotation = itemNode!.eulerAngles;
+    final newRotation = Vector3(currentRotation.x + 0.1, currentRotation.y, currentRotation.z);
+    itemNode!.eulerAngles = newRotation;
+  }
+
+  void scaleUp() {
+    if (itemNode == null) return;
+
+    final currentScale = itemNode!.scale;
+    final newScale = Vector3(currentScale.x + 0.01, currentScale.y + 0.01, currentScale.z + 0.01);
+    itemNode!.scale = newScale;
+  }
+
+  void scaleDown() {
+    if (itemNode == null) return;
+
+    final currentScale = itemNode!.scale;
+    if (currentScale.x < 0.02) return;
+    final newScale = Vector3(currentScale.x - 0.01, currentScale.y - 0.01, currentScale.z - 0.01);
+    itemNode!.scale = newScale;
+  }
 }
