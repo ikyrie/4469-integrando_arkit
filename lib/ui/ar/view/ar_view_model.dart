@@ -17,7 +17,7 @@ class ArViewModel {
     final position = _getPointPosition(points);
     final File file = await _downloadFile("https://raw.githubusercontent.com/olexale/arkit_flutter_plugin/refs/heads/master/example/assets/gltf/Box.gltf");
     if (itemNode == null) {
-      itemNode = _createObjectNode(position);
+      itemNode = _createObjectNode(position, file.path);
       arkitController.add(itemNode!);
     } else {
       itemNode!.position = position;
@@ -40,12 +40,12 @@ class ArViewModel {
 
   Vector3 _getPointPosition(ARKitTestResult points) => Vector3(points.worldTransform.getColumn(3).x, points.worldTransform.getColumn(3).y, points.worldTransform.getColumn(3).z);
 
-  ARKitGltfNode _createObjectNode(Vector3 position) {
+  ARKitGltfNode _createObjectNode(Vector3 position, String path) {
     return ARKitGltfNode(
-      url: "assets/snow_globe.glb",
+      url: path.split("/").last,
       position: position,
       scale: Vector3(0.1, 0.1, 0.1),
-      assetType: AssetType.flutterAsset,
+      assetType: AssetType.documents,
     );
   }
 }
