@@ -1,4 +1,5 @@
 import 'package:arkit_plugin/arkit_plugin.dart';
+import 'package:toca_moveis/ui/ar/view/ar_view_model.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,6 @@ class ArScreen extends StatefulWidget {
 
 class _ArScreenState extends State<ArScreen> {
   late ARKitController arkitController;
-  ARKitNode? itemNode;
 
   @override
   void dispose() {
@@ -33,24 +33,9 @@ class _ArScreenState extends State<ArScreen> {
 
   void onARKitViewCreated(ARKitController arkitController) {
     this.arkitController = arkitController;
+    final ArViewModel arViewModel = ArViewModel(arkitController:  arkitController);
     this.arkitController.addCoachingOverlay(CoachingOverlayGoal.horizontalPlane);
-    this.arkitController.onARTap = (ar) => onARTapHandler(ar);
-
+    this.arkitController.onARTap = (ar) => arViewModel.onARTapHandler(ar);
   }
 
-  void onARTapHandler(List<ARKitTestResult> results) {
-    final points = results.firstWhere((e) => e.type == ARKitHitTestResultType.featurePoint);
-    final position = Vector3(points.worldTransform.getColumn(3).x, points.worldTransform.getColumn(3).y, points.worldTransform.getColumn(3).z);
-    if (itemNode == null) {
-      itemNode = ARKitGltfNode(
-        url: "assets/snow_globe.glb",
-        position: position,
-        scale: Vector3(0.1, 0.1, 0.1),
-        assetType: AssetType.flutterAsset,
-      );
-      arkitController.add(itemNode!);
-    } else {
-      itemNode!.position = position;
-    }
-  }
 }
