@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:toca_moveis/domain/models/furniture.dart';
 import 'package:toca_moveis/ui/_core/widgets/primary_button.dart';
 import 'package:toca_moveis/ui/ar/ar_screen.dart';
@@ -43,8 +44,12 @@ class PermissionScreen extends StatelessWidget {
               ),
             ),
             PrimaryButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ArScreen(furniture: furniture)));
+              onPressed: () async {
+                await Permission.camera.request();
+                final cameraPermissionStatus = await Permission.camera.isGranted;
+                if (cameraPermissionStatus && context.mounted) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => ArScreen(furniture: furniture)));
+                }
               },
               child: "Autorizar acesso à câmera",
             ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:toca_moveis/domain/furniture_provider.dart';
 import 'package:toca_moveis/domain/models/furniture.dart';
+import 'package:toca_moveis/ui/ar/ar_screen.dart';
 import 'package:toca_moveis/ui/ar/permission_screen.dart';
 import 'package:toca_moveis/ui/home/home_screen.dart';
 
@@ -22,15 +24,22 @@ class HomeViewModel extends ChangeNotifier {
   int _indexPage = 0;
 
   // TODO: Quando algum botão de AR for clicado.
-  onFurnitureArViewClicked(BuildContext context, Furniture furniture) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) {
-          return PermissionScreen(furniture: furniture);
-        },
-      ),
-    );
+  Future<void> onFurnitureArViewClicked(BuildContext context, Furniture furniture) async {
+    final cameraPermissionGranted = await Permission.camera.isGranted;
+    if(cameraPermissionGranted && context.mounted) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ArScreen(furniture: furniture)));
+    } else {
+      if (context.mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return PermissionScreen(furniture: furniture);
+            },
+          ),
+        );
+      }
+    }
   }
 
   // Inicialização
