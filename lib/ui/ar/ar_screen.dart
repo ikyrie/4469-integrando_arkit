@@ -23,6 +23,7 @@ class _ArScreenState extends State<ArScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('ARKit in Flutter')),
       body: ARKitSceneView(
+        showFeaturePoints: true,
         enableTapRecognizer: true,
         onARKitViewCreated: onARKitViewCreated,
       ),
@@ -36,8 +37,10 @@ class _ArScreenState extends State<ArScreen> {
   }
 
   void onARTapHandler(List<ARKitTestResult> results) {
+    final points = results.firstWhere((e) => e.type == ARKitHitTestResultType.featurePoint);
+    final position = Vector3(points.worldTransform.getColumn(3).x, points.worldTransform.getColumn(3).y, points.worldTransform.getColumn(3).z);
     final node = ARKitNode(
-        geometry: ARKitSphere(radius: 0.1), position: Vector3(0, 0, -0.5));
+        geometry: ARKitSphere(radius: 0.1), position: position);
     arkitController.add(node);
   }
 }
