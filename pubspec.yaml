@@ -40,6 +40,7 @@ dependencies:
   path_provider: ^2.1.5
   flutter_svg: ^2.0.17
   arkit_plugin: ^1.1.2
+  dio: ^5.8.0+1
 
 dev_dependencies:
   flutter_test:

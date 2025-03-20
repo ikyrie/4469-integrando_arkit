@@ -35,7 +35,7 @@ class _ArScreenState extends State<ArScreen> {
     this.arkitController = arkitController;
     final ArViewModel arViewModel = ArViewModel(arkitController:  arkitController);
     this.arkitController.addCoachingOverlay(CoachingOverlayGoal.horizontalPlane);
-    this.arkitController.onARTap = (ar) => arViewModel.onARTapHandler(ar);
+    this.arkitController.onARTap = (ar) async => arViewModel.onARTapHandler(ar);
   }
 
 }
