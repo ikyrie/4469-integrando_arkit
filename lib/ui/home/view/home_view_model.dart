@@ -27,7 +27,7 @@ class HomeViewModel extends ChangeNotifier {
       context,
       MaterialPageRoute(
         builder: (context) {
-          return PermissionScreen();
+          return PermissionScreen(furniture: furniture);
         },
       ),
     );

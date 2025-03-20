@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:toca_moveis/domain/models/furniture.dart';
 import 'package:toca_moveis/ui/_core/widgets/primary_button.dart';
 import 'package:toca_moveis/ui/ar/ar_screen.dart';
 
 class PermissionScreen extends StatelessWidget {
   const PermissionScreen({
-    super.key,
+    super.key, required this.furniture,
   });
+
+  final Furniture furniture;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class PermissionScreen extends StatelessWidget {
             ),
             PrimaryButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ArScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ArScreen(furniture: furniture)));
               },
               child: "Autorizar acesso à câmera",
             ),

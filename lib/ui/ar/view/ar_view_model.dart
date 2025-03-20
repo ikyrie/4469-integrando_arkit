@@ -12,10 +12,10 @@ class ArViewModel {
   final ARKitController arkitController;
   ARKitGltfNode? itemNode;
 
-  void onARTapHandler(List<ARKitTestResult> results) async {
+  void onARTapHandler(List<ARKitTestResult> results, String furnitureUrl) async {
     final points = results.firstWhere((e) => e.type == ARKitHitTestResultType.featurePoint);
     final position = _getPointPosition(points);
-    final File file = await _downloadFile("https://raw.githubusercontent.com/olexale/arkit_flutter_plugin/refs/heads/master/example/assets/gltf/Box.gltf");
+    final File file = await _downloadFile(furnitureUrl);
     if (itemNode == null) {
       itemNode = _createObjectNode(position, file.path);
       arkitController.add(itemNode!);
