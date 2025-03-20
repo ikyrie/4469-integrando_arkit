@@ -42,8 +42,12 @@ class _ArScreenState extends State<ArScreen> {
     final points = results.firstWhere((e) => e.type == ARKitHitTestResultType.featurePoint);
     final position = Vector3(points.worldTransform.getColumn(3).x, points.worldTransform.getColumn(3).y, points.worldTransform.getColumn(3).z);
     if (itemNode == null) {
-      itemNode = ARKitNode(
-        geometry: ARKitSphere(radius: 0.1), position: position);
+      itemNode = ARKitGltfNode(
+        url: "assets/snow_globe.glb",
+        position: position,
+        scale: Vector3(0.1, 0.1, 0.1),
+        assetType: AssetType.flutterAsset,
+      );
       arkitController.add(itemNode!);
     } else {
       itemNode!.position = position;
