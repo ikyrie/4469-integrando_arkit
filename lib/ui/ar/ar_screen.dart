@@ -11,6 +11,7 @@ class ArScreen extends StatefulWidget {
 
 class _ArScreenState extends State<ArScreen> {
   late ARKitController arkitController;
+  ARKitNode? itemNode;
 
   @override
   void dispose() {
@@ -32,6 +33,7 @@ class _ArScreenState extends State<ArScreen> {
 
   void onARKitViewCreated(ARKitController arkitController) {
     this.arkitController = arkitController;
+    this.arkitController.addCoachingOverlay(CoachingOverlayGoal.horizontalPlane);
     this.arkitController.onARTap = (ar) => onARTapHandler(ar);
 
   }
@@ -39,8 +41,12 @@ class _ArScreenState extends State<ArScreen> {
   void onARTapHandler(List<ARKitTestResult> results) {
     final points = results.firstWhere((e) => e.type == ARKitHitTestResultType.featurePoint);
     final position = Vector3(points.worldTransform.getColumn(3).x, points.worldTransform.getColumn(3).y, points.worldTransform.getColumn(3).z);
-    final node = ARKitNode(
+    if (itemNode == null) {
+      itemNode = ARKitNode(
         geometry: ARKitSphere(radius: 0.1), position: position);
-    arkitController.add(node);
+      arkitController.add(itemNode!);
+    } else {
+      itemNode!.position = position;
+    }
   }
 }
