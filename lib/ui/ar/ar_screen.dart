@@ -13,6 +13,12 @@ class _ArScreenState extends State<ArScreen> {
   late ARKitController arkitController;
 
   @override
+  void dispose() {
+    arkitController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('ARKit in Flutter')),
