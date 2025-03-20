@@ -1,0 +1,1 @@
+Só pra o VSCode não agrupar as pastas.
